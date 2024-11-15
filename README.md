@@ -9,7 +9,7 @@ The Laravel Library Management is an example project that demonstrates how to de
 - **Journals**: Consists of `title`, `author`, `publish_date`, `abstract` and `is_approved` (Request status) attributes.
 - **Newspapers**: Consists of `title`, `publisher` (Kompas, Tribun Timur, or Fajar), `publish_date`, `is_available` and `is_approved` (Request status) attributes.
 
-# User Role
+## User Role
 - **Admin** can add/remove librarian and has authority to approve or reject collection update requested by the librarian.
 - **Librarian** can manage library inventory (Create, Read, Update, Delete).
 
