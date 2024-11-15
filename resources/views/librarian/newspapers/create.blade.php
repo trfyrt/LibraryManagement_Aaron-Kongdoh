@@ -33,9 +33,13 @@
                             <!-- Publisher -->
                             <div class="form-group mb-3">
                                 <label class="font-weight-bold">PUBLISHER</label>
-                                <input type="text" class="form-control @error('publisher') is-invalid @enderror" name="publisher" value="{{ old('publisher') }}" placeholder="Enter Publisher Name">
+                                <select name="publisher" class="form-control @error('publisher') is-invalid @enderror">
+                                    <option value="Kompas" {{ old('publisher') == 'Kompas' ? 'selected' : '' }}>Kompas</option>
+                                    <option value="Tribun Timur" {{ old('publisher') == 'Tribun Timur' ? 'selected' : '' }}>Tribun Timur</option>
+                                    <option value="Fajar" {{ old('publisher') == 'Fajar' ? 'selected' : '' }}>Fajar</option>
+                                </select>
                                 
-                                <!-- error message for publisher -->
+                                <!-- Error message for publisher -->
                                 @error('publisher')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}

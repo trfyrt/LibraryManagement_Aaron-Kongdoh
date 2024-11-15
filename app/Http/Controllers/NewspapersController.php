@@ -68,7 +68,7 @@ class NewspapersController extends Controller
         // Validasi data yang masuk
         $request->validate([
             'title'        => 'required|min:5',
-            'publisher'    => 'required|min:3',
+            'publisher'    => 'required|in:Kompas,Tribun Timur, Fajar',
             'publish_date' => 'required|date',
             'is_available' => 'required|boolean',
         ]);
