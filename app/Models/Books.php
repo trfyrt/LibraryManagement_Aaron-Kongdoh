@@ -11,7 +11,7 @@ class Books extends Model
         'author',
         'publisher',
         'year',
-        'is_ebook',
+        'type',
 ];
 
 }

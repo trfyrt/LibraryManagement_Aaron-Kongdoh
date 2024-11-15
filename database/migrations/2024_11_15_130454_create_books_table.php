@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('author');
             $table->string('publisher');
             $table->year('year');
-            $table->boolean('is_ebook');
+            $table->string('type');
             $table->timestamps();
         });
     }
