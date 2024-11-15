@@ -13,7 +13,16 @@
         <div class="row">
             <div class="col-md-12">
                 <div>
+                    <h3 class="text-center my-4"><b>Library Management System</b></h3>
                     <h3 class="text-center my-4">Viewing Journals</h3>
+                    <header class="d-flex justify-content-center py-3">
+                        <ul class="nav nav-pills">
+                          <li class="nav-item"><a href="{{ route('books.index') }}" class="nav-link link-secondary" style="font-weight: 600">Books</a></li>
+                          <li class="nav-item"><a href="{{ route('cds.index') }}" class="nav-link link-secondary" style="font-weight: 600">CDs</a></li>
+                          <li class="nav-item"><a href="{{ route('journals.index') }}" class="nav-link link-dark" style="font-weight: 600">Journals</a></li>
+                          <li class="nav-item"><a href="{{ route('newspapers.index') }}" class="nav-link link-secondary" style="font-weight: 600">Newspapers</a></li>
+                        </ul>
+                      </header>
                     <hr>
                 </div>
                 <div class="card border-0 shadow-sm rounded">
@@ -37,7 +46,7 @@
                                         <td>{{ $journal->publish_date}}</td>
                                         <td>{{ Str::limit($journal->abstract, 50) }}</td>
                                         <td class="text-center">
-                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('journals.destroy', $journal->id) }}" method="POST">
+                                            <form onsubmit="return confirm('Are you sure?');" action="{{ route('journals.destroy', $journal->id) }}" method="POST">
                                                 <a href="{{ route('journals.show', $journal->id) }}" class="btn btn-sm btn-dark">SHOW</a>
                                                 <a href="{{ route('journals.edit', $journal->id) }}" class="btn btn-sm btn-primary">EDIT</a>
                                                 @csrf
@@ -48,7 +57,7 @@
                                     </tr>
                                 @empty
                                     <div class="alert alert-danger">
-                                        Data Journals belum Tersedia.
+                                        No Journals available.
                                     </div>
                                 @endforelse
                             </tbody>
