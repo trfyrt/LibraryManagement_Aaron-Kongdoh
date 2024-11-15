@@ -14,13 +14,13 @@ class NewspapersController extends Controller
         // Mengambil data latest dan mem-paginate
         $newspapers = Newspapers::latest()->paginate(10);
 
-        return view('newspapers.index', compact('newspapers'));
+        return view('librarian.newspapers.index', compact('newspapers'));
     }
 
     // CREATE
     public function create(): View
     {
-        return view('newspapers.create');
+        return view('librarian.newspapers.create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -51,7 +51,7 @@ class NewspapersController extends Controller
         // Mencari data newspaper berdasarkan ID
         $newspaper = Newspapers::findOrFail($id);
 
-        return view('newspapers.show', compact('newspaper'));
+        return view('librarian.newspapers.show', compact('newspaper'));
     }
 
     // UPDATE
@@ -60,7 +60,7 @@ class NewspapersController extends Controller
         // Mengambil data newspaper untuk diedit
         $newspaper = Newspapers::findOrFail($id);
 
-        return view('newspapers.edit', compact('newspaper'));
+        return view('librarian.newspapers.edit', compact('newspaper'));
     }
 
     public function update(Request $request, $id): RedirectResponse
@@ -82,6 +82,7 @@ class NewspapersController extends Controller
             'publisher'    => $request->publisher,
             'publish_date' => $request->publish_date,
             'is_available' => $request->is_available,
+            'is_approved'   => false, //Kalau habis diupdate jadi pending lagi
         ]);
 
         // Redirect ke halaman index dengan pesan sukses
@@ -100,4 +101,20 @@ class NewspapersController extends Controller
         // Redirect ke halaman index dengan pesan sukses
         return redirect()->route('newspapers.index')->with(['success' => 'Newspaper has been successfully deleted!']);
     }
+    
+    // APPROVE
+    public function approve($id): RedirectResponse
+{
+    // Cari newspaper berdasarkan ID
+    $newspaper = Newspapers::findOrFail($id);
+    
+    // Update status newspaper menjadi approved
+    $newspaper->update([
+        'is_approved' => true,
+    ]);
+
+    // Redirect ke halaman approval dengan pesan sukses
+    return redirect()->route('approval.index')->with(['success' => 'Newspaper data has been updated successfully!']);
+}
+
 }

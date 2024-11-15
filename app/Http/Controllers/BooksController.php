@@ -12,12 +12,12 @@ class BooksController extends Controller
     public function index() : View{
         $books = Books::latest()->paginate(10);
 
-        return view('books.index', compact('books'));
+        return view('librarian.books.index', compact('books'));
     }
 
     // CREATE
     public function create(): View{
-        return view('books.create');
+        return view('librarian.books.create');
     }
 
     public function store(Request $request): RedirectResponse{
@@ -25,7 +25,7 @@ class BooksController extends Controller
             'title'      => 'required|min:5',
             'author'     => 'required|min:3',
             'publisher'  => 'required|min:3',
-            'year'       => 'required|digits:4|integer|min:1600|max:'.date('Y'),
+            'year'       => 'required|digits:4|integer|min:1900|max:'.date('Y'),
             'type'       => 'required|in:book,ebook',
         ]);
 
@@ -44,14 +44,14 @@ class BooksController extends Controller
     public function show(string $id): View{
         $book = Books::findOrFail($id);
     
-        return view('books.show', compact('book'));
+        return view('librarian.books.show', compact('book'));
     }
 
     // UPDATE
     public function edit(string $id): View{
         $book = Books::findOrFail($id);
     
-        return view('books.edit', compact('book'));
+        return view('librarian.books.edit', compact('book'));
     }
 
     public function update(Request $request, $id): RedirectResponse{
@@ -59,7 +59,7 @@ class BooksController extends Controller
         'title'         => 'required|min:5',
         'author'        => 'required|min:5',
         'publisher'     => 'required|min:5',
-        'year'          => 'required|digits:4|integer|min:1600|max:'.date('Y'),
+        'year'          => 'required|digits:4|integer|min:1900|max:'.date('Y'),
         'type'          => 'required|in:book,ebook',
     ]);
 
@@ -71,6 +71,8 @@ class BooksController extends Controller
         'publisher'     => $request->publisher,
         'year'          => $request->year,
         'type'          => $request->type,
+        'is_approved'   => false, //Kalau habis diupdate jadi pending lagi
+
     ]);
 
     return redirect()->route('books.index')->with(['success' => 'Book data has been updated successfully!']);
@@ -84,5 +86,20 @@ class BooksController extends Controller
 
     return redirect()->route('books.index')->with(['success' => 'Book has been successfully deleted!']);
     }
+
+    // APPROVE
+    public function approve($id): RedirectResponse
+{
+    // Cari buku berdasarkan ID
+    $book = Books::findOrFail($id);
+    
+    // Update status buku menjadi approved
+    $book->update([
+        'is_approved' => true,
+    ]);
+
+    // Redirect ke halaman approval dengan pesan sukses
+    return redirect()->route('approval.index')->with(['success' => 'Book data has been updated successfully!']);
+}
       
 }

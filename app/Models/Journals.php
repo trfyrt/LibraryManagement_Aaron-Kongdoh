@@ -11,5 +11,6 @@ class Journals extends Model
         'author',
         'publish_date',
         'abstract',
+        'is_approved'
 ];
 }

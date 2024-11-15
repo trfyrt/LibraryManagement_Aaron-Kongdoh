@@ -11,6 +11,7 @@ class Newspapers extends Model
         'publisher',
         'publish_date',
         'is_available',
+        'is_approved'
 ];
 
 }

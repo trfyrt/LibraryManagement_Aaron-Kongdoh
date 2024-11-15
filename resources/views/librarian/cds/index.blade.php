@@ -35,6 +35,7 @@
                                     <th scope="col">ARTIST</th>
                                     <th scope="col">GENRE</th>
                                     <th scope="col">STOCK</th>
+                                    <th scope="col">STATUS</th>
                                     <th scope="col" style="width: 20%">ACTIONS</th>
                                 </tr>
                             </thead>
@@ -45,6 +46,7 @@
                                         <td>{{ $cd->artist }}</td>
                                         <td>{{ $cd->genre }}</td>
                                         <td>{{ $cd->stock }}</td>
+                                        <td>{{ $cd->is_approved ? 'Approved' : 'Pending' }}</td>
                                         <td class="text-center">
                                             <form onsubmit="return confirm('Are you sure?');" action="{{ route('cds.destroy', $cd->id) }}" method="POST">
                                                 <a href="{{ route('cds.show', $cd->id) }}" class="btn btn-sm btn-dark">SHOW</a>

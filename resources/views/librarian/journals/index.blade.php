@@ -35,6 +35,7 @@
                                     <th scope="col">AUTHOR</th>
                                     <th scope="col">PUBLISH DATE</th>
                                     <th scope="col">ABSTRACT</th>
+                                    <th scope="col">STATUS</th>
                                     <th scope="col" style="width: 20%">ACTIONS</th>
                                 </tr>
                             </thead>
@@ -45,6 +46,7 @@
                                         <td>{{ $journal->author }}</td>
                                         <td>{{ $journal->publish_date}}</td>
                                         <td>{{ Str::limit($journal->abstract, 50) }}</td>
+                                        <td>{{ $journal->is_approved ? 'Approved' : 'Pending' }}</td>
                                         <td class="text-center">
                                             <form onsubmit="return confirm('Are you sure?');" action="{{ route('journals.destroy', $journal->id) }}" method="POST">
                                                 <a href="{{ route('journals.show', $journal->id) }}" class="btn btn-sm btn-dark">SHOW</a>

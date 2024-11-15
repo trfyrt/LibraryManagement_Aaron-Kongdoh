@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('author');
             $table->date('publish_date');
             $table->text('abstract');
+            $table->boolean('is_approved')->default(false);
             $table->timestamps();
         });
     }

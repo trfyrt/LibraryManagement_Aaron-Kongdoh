@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('publisher');
             $table->date('publish_date');
             $table->boolean('is_available');
+            $table->boolean('is_approved')->default(false);
             $table->timestamps();
         });
     }

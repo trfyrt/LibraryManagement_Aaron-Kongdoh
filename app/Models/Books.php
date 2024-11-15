@@ -12,6 +12,7 @@ class Books extends Model
         'publisher',
         'year',
         'type',
+        'is_approved'
 ];
 
 }

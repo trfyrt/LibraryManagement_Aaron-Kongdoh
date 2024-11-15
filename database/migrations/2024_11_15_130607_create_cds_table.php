@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('artist');
             $table->string('genre');
             $table->integer('stock');
+            $table->boolean('is_approved')->default(false);
             $table->timestamps();
         });
     }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('publisher');
             $table->year('year');
             $table->string('type');
+            $table->boolean('is_approved')->default(false);
             $table->timestamps();
         });
     }

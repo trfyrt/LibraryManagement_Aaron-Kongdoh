@@ -11,6 +11,7 @@ class Cds extends Model
         'artist',
         'genre',
         'stock',
+        'is_approved'
 ];
 
 }

@@ -13,13 +13,13 @@ class CdsController extends Controller
     {
         $cds = Cds::latest()->paginate(10);
 
-        return view('cds.index', compact('cds'));
+        return view('librarian.cds.index', compact('cds'));
     }
 
     // CREATE
     public function create(): View
     {
-        return view('cds.create');
+        return view('librarian.cds.create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -46,7 +46,7 @@ class CdsController extends Controller
     {
         $cd = Cds::findOrFail($id);
 
-        return view('cds.show', compact('cd'));
+        return view('librarian.cds.show', compact('cd'));
     }
 
     // UPDATE
@@ -54,7 +54,7 @@ class CdsController extends Controller
     {
         $cd = Cds::findOrFail($id);
 
-        return view('cds.edit', compact('cd'));
+        return view('librarian.cds.edit', compact('cd'));
     }
 
     public function update(Request $request, $id): RedirectResponse
@@ -73,6 +73,7 @@ class CdsController extends Controller
             'artist'    => $request->artist,
             'genre'     => $request->genre,
             'stock'     => $request->stock,
+            'is_approved'   => false, //Kalau habis diupdate jadi pending lagi
         ]);
 
         return redirect()->route('cds.index')->with(['success' => 'Cds data has been updated successfully!']);
@@ -87,4 +88,20 @@ class CdsController extends Controller
 
         return redirect()->route('cds.index')->with(['success' => 'Cds has been successfully deleted!']);
     }
+
+    // APPROVE
+    public function approve($id): RedirectResponse
+{
+    // Cari CD berdasarkan ID
+    $cd = Cds::findOrFail($id);
+    
+    // Update status CD menjadi approved
+    $cd->update([
+        'is_approved' => true,
+    ]);
+
+    // Redirect ke halaman approval dengan pesan sukses
+    return redirect()->route('approval.index')->with(['success' => 'CD data has been updated successfully!']);
+}
+
 }

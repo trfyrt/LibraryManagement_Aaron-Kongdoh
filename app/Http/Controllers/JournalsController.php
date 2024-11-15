@@ -14,13 +14,13 @@ class JournalsController extends Controller
         // Retrieve journals with pagination
         $journals = Journals::latest()->paginate(10);
 
-        return view('journals.index', compact('journals'));
+        return view('librarian.journals.index', compact('journals'));
     }
 
     // CREATE
     public function create(): View
     {
-        return view('journals.create');
+        return view('librarian.journals.create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -51,7 +51,7 @@ class JournalsController extends Controller
         // Find the journal by its ID
         $journal = Journals::findOrFail($id);
 
-        return view('journals.show', compact('journal'));
+        return view('librarian.journals.show', compact('journal'));
     }
 
     // UPDATE
@@ -60,7 +60,7 @@ class JournalsController extends Controller
         // Find the journal by its ID
         $journal = Journals::findOrFail($id);
 
-        return view('journals.edit', compact('journal'));
+        return view('librarian.journals.edit', compact('journal'));
     }
 
     public function update(Request $request, $id): RedirectResponse
@@ -81,6 +81,7 @@ class JournalsController extends Controller
             'author'       => $request->author,
             'publish_date' => $request->publish_date,
             'abstract'     => $request->abstract,
+            'is_approved'   => false, //Kalau habis diupdate jadi pending lagi
         ]);
 
         // Redirect back with a success message
@@ -98,4 +99,20 @@ class JournalsController extends Controller
         // Redirect back with a success message
         return redirect()->route('journals.index')->with(['success' => 'Journal has been successfully deleted!']);
     }
+
+    // APPROVE
+    public function approve($id): RedirectResponse
+{
+    // Cari jurnal berdasarkan ID
+    $journal = Journals::findOrFail($id);
+    
+    // Update status jurnal menjadi approved
+    $journal->update([
+        'is_approved' => true,
+    ]);
+
+    // Redirect ke halaman approval dengan pesan sukses
+    return redirect()->route('approval.index')->with(['success' => 'Journal data has been updated successfully!']);
+}
+
 }
