@@ -21,6 +21,16 @@
                           <li class="nav-item"><a href="{{ route('cds.index') }}" class="nav-link link-secondary" style="font-weight: 600">CDs</a></li>
                           <li class="nav-item"><a href="{{ route('journals.index') }}" class="nav-link link-dark" style="font-weight: 600">Journals</a></li>
                           <li class="nav-item"><a href="{{ route('newspapers.index') }}" class="nav-link link-secondary" style="font-weight: 600">Newspapers</a></li>
+                          <li class="nav-item"><form method="POST" action="{{ route('logout') }}" class="nav-link link-danger" style="font-weight: 600">
+                            @csrf
+                            
+                            <x-responsive-nav-link class="link-danger" :href="route('logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                        {{ __('Log Out') }}
+                    </x-responsive-nav-link>
+                        </form></li>
+        
                         </ul>
                       </header>
                     <hr>

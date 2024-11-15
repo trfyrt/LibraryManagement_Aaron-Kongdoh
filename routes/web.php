@@ -15,8 +15,10 @@ Route::resource('/books', \App\Http\Controllers\BooksController::class);
 Route::resource('/cds', \App\Http\Controllers\CdsController::class);
 Route::resource('/journals', \App\Http\Controllers\JournalsController::class);
 Route::resource('/newspapers', \App\Http\Controllers\NewspapersController::class);
-Route::resource('/approval', \App\Http\Controllers\ApprovalController::class);
-Route::resource('/librarianManagement', \App\Http\Controllers\LibrarianManagementController::class);
+Route::resource('/approval', \App\Http\Controllers\ApprovalController::class)->
+middleware(['auth', 'admin']);
+Route::resource('/librarianManagement', \App\Http\Controllers\LibrarianManagementController::class)->
+middleware(['auth', 'admin']);
 Route::put('/books/{id}/approve', [BooksController::class, 'approve'])->name('books.approve');
 Route::put('/cds/{id}/approve', [CdsController::class, 'approve'])->name('cds.approve');
 Route::put('/journals/{id}/approve', [JournalsController::class, 'approve'])->name('journals.approve');
