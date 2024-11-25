@@ -10,9 +10,23 @@
 <body style="background: lightgray">
 
     <div class="container mt-5">
-        <h3 class="text-center my-4"><b>Library Borrow Management</b></h3>
-        <h4 class="text-center my-4">Lecturer Borrow Items</h4>
-        <hr>
+        <h3 class="text-center my-4"><b>Library Management System</b></h3>
+        <h3 class="text-center my-4">Viewing Catalogue</h3>
+<header class="d-flex justify-content-center py-3">
+    <ul class="nav nav-pills">
+      <li class="nav-item"><form method="POST" action="{{ route('logout') }}" class="nav-link link-danger" style="font-weight: 600">
+        @csrf
+        
+        <x-responsive-nav-link class="link-danger" :href="route('logout')"
+        onclick="event.preventDefault();
+                    this.closest('form').submit();">
+    {{ __('Log Out') }}
+</x-responsive-nav-link>
+    </form></li>
+
+    </ul>
+  </header>
+  <hr>
 
         <!-- Books Table -->
         <div class="card border-0 shadow-sm rounded mb-4">
