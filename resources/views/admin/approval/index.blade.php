@@ -211,6 +211,53 @@
                 @endforelse
             </tbody>
         </table>
+
+        <!-- Fyps Section -->
+        <h4>FYPs</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">TITLE</th>
+                    <th scope="col">AUTHOR</th>
+                    <th scope="col">SUPERVISOR</th>
+                    <th scope="col">YEAR</th>
+                    <th scope="col">STATUS</th>
+                    <th scope="col">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($fyps as $fyp)
+                    <tr>
+                        <td>{{ $fyp->title }}</td>
+                        <td>{{ $fyp->author }}</td>
+                        <td>{{ $fyp->supervisor }}</td>
+                        <td>{{ $fyp->year }}</td>
+                        <td>{{ $fyp->is_approved ? 'Approved' : 'Pending' }}</td>
+                        <td class="text-center">
+                            <form onsubmit="return confirm('Are you sure?');" action="{{ route('fyps.destroy', $fyp->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger">DELETE</button>
+                            </form>
+                            @if (!$fyp->is_approved)
+                                <form onsubmit="return confirm('Are you sure?');" action="{{ route('fyps.approve', $fyp->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="btn btn-sm btn-success">APPROVE</button>
+                                </form>
+                            @else
+                                <span class="badge bg-success">Approved</span>
+                            @endif
+                        </td>
+                    </tr>
+                @empty
+                    <div class="alert alert-danger">
+                        No FYPs need approval.
+                    </div>
+                @endforelse
+            </tbody>
+        </table>
+        
         
     </div>
 

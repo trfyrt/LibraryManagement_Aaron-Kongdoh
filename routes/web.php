@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\CdsController;
+use App\Http\Controllers\FypsController;
 use App\Http\Controllers\JournalsController;
 use App\Http\Controllers\NewspapersController;
 use App\Http\Controllers\ProfileController;
@@ -24,6 +25,7 @@ Route::put('/books/{id}/approve', [BooksController::class, 'approve'])->name('bo
 Route::put('/cds/{id}/approve', [CdsController::class, 'approve'])->name('cds.approve');
 Route::put('/journals/{id}/approve', [JournalsController::class, 'approve'])->name('journals.approve');
 Route::put('/newspapers/{id}/approve', [NewspapersController::class, 'approve'])->name('newspapers.approve');
+Route::put('/fyps/{id}/approve', [FypsController::class, 'approve'])->name('fyps.approve');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
