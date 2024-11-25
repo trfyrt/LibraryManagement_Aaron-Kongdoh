@@ -15,4 +15,10 @@ class Books extends Model
         'is_approved'
 ];
 
+    public function borrowedBy()
+    {
+        return $this->belongsToMany(User::class, 'borrow', 'book_id', 'user_id')
+                    ->withPivot('days_left', 'created_at', 'updated_at');
+    }
+
 }

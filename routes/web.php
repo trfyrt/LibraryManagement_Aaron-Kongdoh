@@ -6,6 +6,7 @@ use App\Http\Controllers\FypsController;
 use App\Http\Controllers\JournalsController;
 use App\Http\Controllers\NewspapersController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,6 +18,7 @@ Route::resource('/cds', \App\Http\Controllers\CdsController::class);
 Route::resource('/journals', \App\Http\Controllers\JournalsController::class);
 Route::resource('/newspapers', \App\Http\Controllers\NewspapersController::class);
 Route::resource('/fyps', \App\Http\Controllers\FypsController::class);
+Route::resource('/borrow', \App\Http\Controllers\StudentController::class);
 Route::resource('/approval', \App\Http\Controllers\ApprovalController::class)->
 middleware(['auth', 'admin']);
 Route::resource('/librarianManagement', \App\Http\Controllers\LibrarianManagementController::class)->
@@ -26,6 +28,8 @@ Route::put('/cds/{id}/approve', [CdsController::class, 'approve'])->name('cds.ap
 Route::put('/journals/{id}/approve', [JournalsController::class, 'approve'])->name('journals.approve');
 Route::put('/newspapers/{id}/approve', [NewspapersController::class, 'approve'])->name('newspapers.approve');
 Route::put('/fyps/{id}/approve', [FypsController::class, 'approve'])->name('fyps.approve');
+
+Route::post('/books/{id}/borrow', [StudentController::class, 'borrow'])->name('books.borrow');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
