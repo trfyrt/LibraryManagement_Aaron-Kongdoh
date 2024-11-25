@@ -32,7 +32,15 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('approval.index');
         };
 
-        return redirect()->intended(route('books.index'));
+        if($request->user()->level === 'librarian'){
+            return redirect()->route('books.index');
+        };
+
+        if($request->user()->level === 'lecturer'){
+            return redirect()->route('lecturerBorrow.index');
+        };
+
+        return redirect()->intended(route('studentBorrow.index'));
     }
 
     /**

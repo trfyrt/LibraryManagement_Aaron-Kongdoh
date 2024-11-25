@@ -32,6 +32,6 @@ class StudentController extends Controller
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('borrow.index')->with(['success' => 'Book borrowed successfully!']);
+        return redirect()->route('studentBorrow.index')->with(['success' => 'Book borrowed successfully!']);
     }
 }
