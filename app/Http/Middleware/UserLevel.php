@@ -17,7 +17,16 @@ class UserLevel
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::user()->level != 'admin'){
-            return redirect('books');
+            
+            if(Auth::user()->level == 'librarian'){
+                return redirect('books');
+            }
+            else if(Auth::user()->level == 'student'){
+                return redirect('studentBorrow');
+            }
+            else if(Auth::user()->level == 'lecturer'){
+                return redirect('lecturerBorrow');
+            }
         }
 
         return $next($request);
