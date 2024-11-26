@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Books;
 use App\Models\Cds;
+use App\Models\Fyps;
 use App\Models\Journals;
 use App\Models\Newspapers;
 use Illuminate\Http\RedirectResponse;
@@ -17,7 +18,8 @@ class ApprovalController extends Controller
     $cds = Cds::where('is_approved', false)->latest()->paginate(10);
     $newspapers = Newspapers::where('is_approved', false)->latest()->paginate(10);
     $journals = Journals::where('is_approved', false)->latest()->paginate(10);
+    $fyps = Fyps::where('is_approved', false)->latest()->paginate(10);
 
-    return view('admin.approval.index', compact('books', 'cds', 'newspapers', 'journals'));
+    return view('admin.approval.index', compact('books', 'cds', 'newspapers', 'journals', 'fyps'));
     }
 }
