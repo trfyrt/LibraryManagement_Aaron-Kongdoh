@@ -48,8 +48,20 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    return redirect()->route('approval.index');
+})->middleware(['auth', 'admin']);
+
+Route::get('/dashboard', function () {
+    return redirect()->route('books.index');
+})->middleware(['auth', 'librarian']);
+
+Route::get('/dashboard', function () {
+    return redirect()->route('lecturerBorrow.index');
+})->middleware(['auth', 'lecturer']);
+
+Route::get('/dashboard', function () {
+    return redirect()->route('studentBorrow.index');
+})->middleware(['auth', 'student']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
