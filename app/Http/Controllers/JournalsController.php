@@ -3,12 +3,109 @@
 namespace App\Http\Controllers;
 
 use App\Models\Journals;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class JournalsController extends Controller
 {
+        // API: Get all journals
+        public function apiIndex(): JsonResponse
+        {
+            $journals = Journals::latest()->paginate(10);
+    
+            return response()->json([
+                'success' => true,
+                'data' => $journals,
+            ], 200);
+        }
+    
+        // API: Show specific journal by ID
+        public function apiShow($id): JsonResponse
+        {
+            $journal = Journals::find($id);
+    
+            if (!$journal) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Journal not found',
+                ], 404);
+            }
+    
+            return response()->json([
+                'success' => true,
+                'data' => $journal,
+            ], 200);
+        }
+    
+        // API: Create a new journal
+        public function apiStore(Request $request): JsonResponse
+        {
+            $validated = $request->validate([
+                'title' => 'required|min:5',
+                'author' => 'required|min:3',
+                'publish_date' => 'required|date',
+                'abstract' => 'required|min:10',
+            ]);
+    
+            $journal = Journals::create($validated);
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'Journal created successfully',
+                'data' => $journal,
+            ], 201);
+        }
+    
+        // API: Update a journal
+        public function apiUpdate(Request $request, $id): JsonResponse
+        {
+            $journal = Journals::find($id);
+    
+            if (!$journal) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Journal not found',
+                ], 404);
+            }
+    
+            $validated = $request->validate([
+                'title' => 'required|min:5',
+                'author' => 'required|min:3',
+                'publish_date' => 'required|date',
+                'abstract' => 'required|min:10',
+            ]);
+    
+            $journal->update(array_merge($validated, ['is_approved' => false]));
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'Journal updated successfully',
+                'data' => $journal,
+            ], 200);
+        }
+    
+        // API: Delete a journal
+        public function apiDestroy($id): JsonResponse
+        {
+            $journal = Journals::find($id);
+    
+            if (!$journal) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Journal not found',
+                ], 404);
+            }
+    
+            $journal->delete();
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'Journal deleted successfully',
+            ], 200);
+        }
+    
     public function index(): View
     {
         // Retrieve journals with pagination

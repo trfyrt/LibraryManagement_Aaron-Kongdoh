@@ -4,12 +4,109 @@ namespace App\Http\Controllers;
 
 use App\Models\Fyp;
 use App\Models\Fyps;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class FypsController extends Controller
 {
+        // API: Get all FYPs
+        public function apiIndex(): JsonResponse
+        {
+            $fyps = Fyps::all();
+    
+            return response()->json([
+                'success' => true,
+                'data' => $fyps,
+            ], 200);
+        }
+    
+        // API: Show specific FYP by ID
+        public function apiShow($id): JsonResponse
+        {
+            $fyp = Fyps::find($id);
+    
+            if (!$fyp) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'FYP not found',
+                ], 404);
+            }
+    
+            return response()->json([
+                'success' => true,
+                'data' => $fyp,
+            ], 200);
+        }
+    
+        // API: Create a new FYP
+        public function apiStore(Request $request): JsonResponse
+        {
+            $validated = $request->validate([
+                'title' => 'required|min:5',
+                'author' => 'required|min:3',
+                'supervisor' => 'required|min:3',
+                'year' => 'required|integer|digits:4',
+            ]);
+    
+            $fyp = Fyps::create($validated);
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'FYP created successfully',
+                'data' => $fyp,
+            ], 201);
+        }
+    
+        // API: Update an FYP
+        public function apiUpdate(Request $request, $id): JsonResponse
+        {
+            $fyp = Fyps::find($id);
+    
+            if (!$fyp) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'FYP not found',
+                ], 404);
+            }
+    
+            $validated = $request->validate([
+                'title' => 'required|min:5',
+                'author' => 'required|min:3',
+                'supervisor' => 'required|min:3',
+                'year' => 'required|integer|digits:4',
+            ]);
+    
+            $fyp->update(array_merge($validated, ['is_approved' => false]));
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'FYP updated successfully',
+                'data' => $fyp,
+            ], 200);
+        }
+    
+        // API: Delete an FYP
+        public function apiDestroy($id): JsonResponse
+        {
+            $fyp = Fyps::find($id);
+    
+            if (!$fyp) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'FYP not found',
+                ], 404);
+            }
+    
+            $fyp->delete();
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'FYP deleted successfully',
+            ], 200);
+        }
+    
     public function index(): View
     {
         // Retrieve FYPs with pagination
