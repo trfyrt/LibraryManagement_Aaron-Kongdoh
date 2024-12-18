@@ -27,6 +27,9 @@ class Admin
             else if(Auth::user()->level == 'lecturer'){
                 return redirect('lecturerBorrow');
             }
+            else if(Auth::user()->level == 'general'){
+                return redirect('generalBorrow');
+            }
         }
 
         return $next($request);

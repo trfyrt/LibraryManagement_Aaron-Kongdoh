@@ -24,6 +24,9 @@ class Librarian
             else if(Auth::user()->level == 'student'){
                 return redirect('studentBorrow');
             }
+            else if(Auth::user()->level == 'general'){
+                return redirect('generalBorrow');
+            }
         }
 
         return $next($request);
