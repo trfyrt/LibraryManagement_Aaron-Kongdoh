@@ -3,6 +3,7 @@
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\CdsController;
 use App\Http\Controllers\FypsController;
+use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\JournalsController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\NewspapersController;
@@ -27,6 +28,12 @@ Route::middleware(['auth', 'librarian'])->group(function () {
 Route::middleware(['auth', 'student'])->group(function () {
     Route::resource('/studentBorrow', \App\Http\Controllers\StudentController::class);
     Route::post('/books/{id}/borrow', [StudentController::class, 'borrow'])->name('books.borrow');
+});
+
+// Middleware group untuk public/general
+Route::middleware(['auth', 'general'])->group(function () {
+    Route::resource('/generalBorrow', \App\Http\Controllers\StudentController::class);
+    Route::post('/books/{id}/borrow', [GeneralController::class, 'borrow'])->name('books.borrow');
 });
 
 // Middleware group untuk lecturer
