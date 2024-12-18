@@ -32,7 +32,7 @@ Route::middleware(['auth', 'student'])->group(function () {
 
 // Middleware group untuk public/general
 Route::middleware(['auth', 'general'])->group(function () {
-    Route::resource('/generalBorrow', \App\Http\Controllers\StudentController::class);
+    Route::resource('/generalBorrow', \App\Http\Controllers\GeneralController::class);
     Route::post('/books/{id}/borrow', [GeneralController::class, 'borrow'])->name('books.borrow');
 });
 
@@ -69,6 +69,10 @@ Route::get('/dashboard', function () {
 Route::get('/dashboard', function () {
     return redirect()->route('studentBorrow.index');
 })->middleware(['auth', 'student']);
+
+Route::get('/dashboard', function () {
+    return redirect()->route('generalBorrow.index');
+})->middleware(['auth', 'general']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -29,7 +29,7 @@
         </header>
         
         <h4>Librarian</h4>
-        <a href="{{ route('register') }}" class="btn btn-md btn-success mb-3">ADD NEW LIBRARIAN</a>
+        <a href="{{ route('registerLib') }}" class="btn btn-md btn-success mb-3">ADD NEW LIBRARIAN</a>
         <table class="table table-bordered">
             <thead>
                 <tr>

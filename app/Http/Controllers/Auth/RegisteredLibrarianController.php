@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
-class RegisteredUserController extends Controller
+class RegisteredLibrarianController extends Controller
 {
     /**
      * Display the registration view.
      */
     public function create(): View
     {
-        return view('auth.register');
+        return view('auth.register_librarian');
     }
 
     /**
@@ -32,7 +32,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:users,username'], // Validation for username
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'], // Ensure lowercase
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -41,13 +41,13 @@ class RegisteredUserController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'level' => 'general', // Automatically set level to general
+            'level' => 'librarian', // Automatically set level to librarian
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('generalBorrow', absolute: false));
+        return redirect()->route('librarianManagement.index'); // Redirect to the librarianManagement
     }
 }
